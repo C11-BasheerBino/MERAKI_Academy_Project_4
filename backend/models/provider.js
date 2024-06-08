@@ -13,6 +13,7 @@ const providerSchema = mongoose.Schema({
   workField:{type:String,required:true},
   experince:{type:Number,required:true},
   status:{type:String,required:true},
+  role:{type: mongoose.Schema.Types.ObjectId, ref: "role"}
   
 });
 

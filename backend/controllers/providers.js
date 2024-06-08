@@ -28,6 +28,7 @@ const registerProvider = (req, res) => {
     workField,
     experince,
     status:'Pendding',
+    role:"6664babe9f801f32457f6dd7"
    
   })
    //role:"123"
