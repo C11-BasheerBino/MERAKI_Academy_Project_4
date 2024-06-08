@@ -13,7 +13,7 @@ const providerSchema = mongoose.Schema({
   workField:{type:String,required:true},
   experince:{type:Number,required:true},
   status:{type:String,required:true},
-  role:{type: mongoose.Schema.Types.ObjectId, ref: "role"}
+  
 });
 
 providerSchema.pre("save", async function () {
@@ -21,4 +21,4 @@ providerSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-module.exports = mongoose.model("provider", userSchema);
+module.exports = mongoose.model("provider", providerSchema);

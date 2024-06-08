@@ -10,7 +10,6 @@ const userSchema = mongoose.Schema({
   location: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role:{type: mongoose.Schema.Types.ObjectId, ref: "role"}
 });
 
 userSchema.pre("save", async function () {

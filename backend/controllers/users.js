@@ -13,7 +13,6 @@ const registerUser = (req, res) => {
     location,
     email,
     password,
-    role,
   } = req.body;
   user = new usersModel({
     firstName,
@@ -24,7 +23,6 @@ const registerUser = (req, res) => {
     location,
     email,
     password,
-    role,
   });
   user.save().then((result)=>{
     const keys = {
