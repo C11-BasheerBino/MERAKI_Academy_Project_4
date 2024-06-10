@@ -31,6 +31,10 @@ app.use("/services",servicesRouter)
 const roleRouter=require("./routes/role")
 app.use("/role",roleRouter)
 
+//import Requests  Router
+const requestsRouter=require('./routes/requests')
+app.use("/requests",requestsRouter)
+
 // Handles any other endpoints [unassigned - endpoints]
 app.use("*", (req, res) => res.status(404).json("NO content at this path"));
 
