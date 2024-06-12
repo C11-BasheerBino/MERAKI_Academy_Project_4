@@ -51,8 +51,8 @@ res.json(keys).status(200)
 
 const getServiceById=(req,res)=>{
 
-    const _id = req.params.id
-    servicesModel.find({_id}).then((result)=>{
+    const id = req.params.id  //must be taked from token 
+    servicesModel.find({providerID:id}).then((result)=>{
         const keys ={
             success: true,
             message: 'All the Services',

@@ -5,9 +5,9 @@ const {createNewService,getAllServices,getServiceById,updateServiceById,deleteSe
 
 const servicesRouter = express.Router()
 
-servicesRouter.post("/",authentcation,createNewService)
+servicesRouter.post("/",createNewService)
 servicesRouter.get("/",authentcation,getAllServices)
-servicesRouter.get("/:id",authentcation,getServiceById)
+servicesRouter.get("/:id",getServiceById)
 servicesRouter.put("/:id",authentcation,updateServiceById)
 servicesRouter.delete("/:id",authentcation,deleteServiceById)
 
