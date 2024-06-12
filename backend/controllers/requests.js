@@ -58,7 +58,7 @@ const newStatus = req.body.status
 
 const getRequestbyStatus = (req,res)=>{
     const calledStatus= req.params.status
-    requestsModel.find({status:calledStatus}).then((result)=>{
+    requestsModel.find({status:calledStatus}).populate("serviceId").then((result)=>{
         const keys ={
             success: true,
             message: 'All the requests',
@@ -77,9 +77,28 @@ const getRequestbyStatus = (req,res)=>{
 
 }
 
+const getAllRequests = (req,res)=>{
+    requestsModel.find().populate("serviceId").then((result)=>{
+        const keys ={
+            success: true,
+            message: 'All the requests',
+            services: result
+        }
+        console.log(result)
+        res.json(keys).status(200)
+    }).catch((err)=>{
+        const keys = {
+            success: false,
+            message: "Server Error",
+            err: err.message
+        }
+        res.json(keys).status(500)
+    })
+}
+
     
 
 
 
 
-module.exports={createRequestByUser,updateStatusByProvider,getRequestbyStatus}
+module.exports={createRequestByUser,updateStatusByProvider,getRequestbyStatus,getAllRequests}
