@@ -50,11 +50,56 @@ const registerProvider = (req, res) => {
   
 };
 
+/// //// ////
+
+const loginProvider = (req,res)=>{
+  const email=req.body.email
+  const newPassword = req.body.password
+  providerModel.findOne({email}).populate('role','-_id -__v').then(async (result)=>{
+if(!result){ 
+  keys={
+    success: false,
+    message: `The email doesn't exist or The password you’ve entered is incorrect`,
+  }
+  return res.status(403).json(keys)}
+  try {
+    const isSame =await bcrypt.compare(newPassword, result.password);
+    if(!isSame){
+      const keys = {
+        success: false,
+        massage:"The email doesn’t exist or the password you’ve entered is incorrect",
+      };
+     return res.status(403).json(keys);
+    }
+    const payload = {
+      providerId: result._id,
+      role:result.role,
+      status:'Provider'
+    
+    };
+    const options = {
+      expiresIn: '60m'
+    };
+    const token = jwt.sign(payload, process.env.SECRET, options);
+    const keys = {
+      success: true,
+      massage: "Valid login credentials",
+      token: token,
+    };
+return res.json(keys).status(200);
+
+  } catch (error) {
+    throw new Error(error.message);
+
+  }
+}).catch((err)=>{
+  res.send(err)
+})
+}
 
 
 
 
 
 
-
-module.exports={registerProvider}
+module.exports={registerProvider,loginProvider}

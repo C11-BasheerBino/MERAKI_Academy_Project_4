@@ -75,7 +75,6 @@ if(!result){
       massage: "Valid login credentials",
       token: token,
     };
-    console.log(result.role)
 return res.json(keys).status(200);
 
   } catch (error) {
