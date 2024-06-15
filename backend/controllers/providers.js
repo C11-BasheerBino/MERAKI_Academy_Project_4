@@ -62,6 +62,13 @@ if(!result){
     message: `The email doesn't exist or The password you’ve entered is incorrect`,
   }
   return res.status(403).json(keys)}
+if(result.status==='Pendding'){
+  keys={
+    success: false,
+    message: `The Provider in waitng list please try later or contact us for more details`,
+  }
+  return res.status(200).json(keys)}
+
   try {
     const isSame =await bcrypt.compare(newPassword, result.password);
     if(!isSame){

@@ -6,6 +6,7 @@ import Dashbord from './components/Provider interface/dashbord';
 import Services from './components/Provider interface/MyServices';
 import AddService from './components/Provider interface/AddNewServices';
 import ProviderRegister from "./components/Provider interface/ProviderRegister"
+import LoginAsProvider from "./components/Provider interface/ProviderLogin"
 const App = () => {
   return (
    <div className="App">
@@ -16,6 +17,7 @@ const App = () => {
       <Services/>
       <AddService/>
       <ProviderRegister/>
+      <LoginAsProvider/>
     </div>
   )
 }
