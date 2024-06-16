@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios"
+import { Link } from "react-router-dom";
 const Login = () => {
   const [loginMsg, setLoginMsg] = useState(false);
 
@@ -37,8 +38,8 @@ console.log(result.data);
         }}
       />
       <button onClick={login}>Login</button>
-      <button>Login as provider</button>
-      <div>don't have an account ?  <a href="register">Register here</a></div>
+      <button ><Link to="/providers/login" >Login as Provider</Link></button>
+      <div>don't have an account ?  <a href="./register">Register here</a></div>
     </div>
   );
 };

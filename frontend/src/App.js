@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{createContext,useState} from 'react'
 import "./App.css";
 import Login from './components/User interface/Login';
 import Register from "./components/User interface/Register"
@@ -7,17 +7,35 @@ import Services from './components/Provider interface/MyServices';
 import AddService from './components/Provider interface/AddNewServices';
 import ProviderRegister from "./components/Provider interface/ProviderRegister"
 import LoginAsProvider from "./components/Provider interface/ProviderLogin"
+import {Route, Routes} from "react-router-dom"
+import Navigation from "./components/shared components/Navbar"
+
+export const UserContext = createContext();
+
 const App = () => {
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const[loggingId,setLoggingId]=useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
    <div className="App">
       <h1>Hello World!</h1>
-      <Login/>
-      <Register/>
-      <Dashbord/>
-      <Services/>
-      <AddService/>
-      <ProviderRegister/>
-      <LoginAsProvider/>
+      <UserContext.Provider value={{token, setToken,isLoggedIn, setIsLoggedIn,loggingId,setLoggingId}}>
+      <Navigation/>
+      <Routes>
+      <Route path="/users/register" element={<Register />} />
+      <Route path="/users/login" element={<Login />} />
+      <Route path='/providers/login' element={<LoginAsProvider/>}/>
+      <Route path="/providers/register" element={<ProviderRegister/>} />
+      <Route path="/dashbord" element={<Dashbord/>} />
+      <Route path="/providers/services" element={<Services/>} />
+      <Route path="/providers/add_new_service" element={<AddService/>} />
+
+
+      </Routes>
+      
+      
+      
+      </UserContext.Provider>
     </div>
   )
 }

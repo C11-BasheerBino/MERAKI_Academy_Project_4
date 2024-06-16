@@ -89,6 +89,7 @@ if(result.status==='Pendding'){
     };
     const token = jwt.sign(payload, process.env.SECRET, options);
     const keys = {
+      providerId: result._id,
       success: true,
       message: "Valid login credentials",
       token: token,

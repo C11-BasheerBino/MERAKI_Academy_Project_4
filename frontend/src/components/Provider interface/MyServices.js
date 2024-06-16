@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
+import { UserContext } from "../../App";
 
 const Services = () => {
-    const [deleteService, setDeleteService] = useState();
+const user = useContext(UserContext)
+  const [deleteService, setDeleteService] = useState();
 
     const Delete = (e) => {
         axios
@@ -43,7 +45,7 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
   const [services, setService] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/services/666495eafe7497e5e90667ec") //edit the id to be variable from token
+      .get(`http://localhost:5000/services/${user.loggingId}`) //edit the id to be variable from token
       .then((result) => {
         console.log("service", result.data.services);
         setService(result.data.services);

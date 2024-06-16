@@ -1,6 +1,12 @@
 import React, { useContext, useState } from "react";
 import axios from "axios"
+import { UserContext } from "../../App";
+import { useNavigate } from "react-router-dom";
+
+
 const LoginAsProvider = () => {
+  const navigate=useNavigate()
+  const user = useContext(UserContext)
   const [loginMsg, setLoginMsg] = useState(false);
 
   const [providerLogging, setProviderLogging] = useState({});
@@ -8,8 +14,12 @@ const LoginAsProvider = () => {
     axios
     .post("http://localhost:5000/providers/login", providerLogging)
     .then((result) => {
+      console.log("from provider Login",result.data);
 setLoginMsg(result.data.message)
-console.log(result.data);
+user.setToken(result.data.token)
+user.setLoggingId(result.data.providerId)
+navigate("/dashbord")
+
     })
     .catch((err) => {
     
@@ -38,7 +48,7 @@ console.log(result.data);
       />
       <button onClick={ProviderLogin}>Login</button>
       
-      <div>don't have an account ?  <a href="register">Register here</a></div>
+      <div>Start your Maintence career  <a href="./register">from here</a></div>
       {loginMsg && <div>{loginMsg}</div>}
     </div>
   );
