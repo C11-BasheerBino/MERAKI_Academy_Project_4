@@ -8,8 +8,8 @@ const servicesRouter = express.Router()
 servicesRouter.post("/",createNewService)
 servicesRouter.get("/",authentcation,getAllServices)
 servicesRouter.get("/:id",getServiceById)
-servicesRouter.put("/:id",authentcation,updateServiceById)
-servicesRouter.delete("/:id",authentcation,deleteServiceById)
+servicesRouter.put("/:id",updateServiceById)
+servicesRouter.delete("/:id",deleteServiceById)
 
 
 

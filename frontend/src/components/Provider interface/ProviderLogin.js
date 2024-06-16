@@ -9,6 +9,7 @@ const LoginAsProvider = () => {
     .post("http://localhost:5000/providers/login", providerLogging)
     .then((result) => {
 setLoginMsg(result.data.message)
+console.log(result.data);
     })
     .catch((err) => {
     

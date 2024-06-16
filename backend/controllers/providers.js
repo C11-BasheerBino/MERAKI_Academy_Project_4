@@ -70,7 +70,7 @@ if(result.status==='Pendding'){
   return res.status(200).json(keys)}
 
   try {
-    const isSame =await bcrypt.compare(newPassword, result.password);
+    const isSame =await bcyrpt.compare(newPassword, result.password);
     if(!isSame){
       const keys = {
         success: false,
@@ -90,7 +90,7 @@ if(result.status==='Pendding'){
     const token = jwt.sign(payload, process.env.SECRET, options);
     const keys = {
       success: true,
-      massage: "Valid login credentials",
+      message: "Valid login credentials",
       token: token,
     };
 return res.json(keys).status(200);
