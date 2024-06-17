@@ -35,6 +35,10 @@ app.use("/role",roleRouter)
 const requestsRouter=require('./routes/requests')
 app.use("/requests",requestsRouter)
 
+//import Fields Router 
+const fieldsRouter=require("./routes/fields")
+app.use("/fields",fieldsRouter)
+
 // Handles any other endpoints [unassigned - endpoints]
 app.use("*", (req, res) => res.status(404).json("NO content at this path"));
 
