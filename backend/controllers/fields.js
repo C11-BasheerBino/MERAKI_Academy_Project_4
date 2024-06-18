@@ -27,7 +27,7 @@ const getAllFields =(req,res)=>{
         const keys ={
             success: true,
             message: 'All the fields',
-            services: result
+            fields: result
         }
 
         res.json(keys).status(200)
