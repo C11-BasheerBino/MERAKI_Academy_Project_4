@@ -11,6 +11,7 @@ import Fields from "./components/User interface/Fields";
 
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/shared components/Navbar";
+import ProviderRequest from "./components/Admin_dashbbord/ProviderRequests";
 
 export const UserContext = createContext();
 
@@ -44,6 +45,7 @@ const App = () => {
 
         <div>test</div>
         <Fields />
+<ProviderRequest/>
       </UserContext.Provider>
     </div>
   );
