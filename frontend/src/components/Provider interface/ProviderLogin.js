@@ -17,7 +17,8 @@ const LoginAsProvider = () => {
       console.log("from provider Login",result.data);
 setLoginMsg(result.data.message)
 user.setToken(result.data.token)
-user.setLoggingId(result.data.providerId)
+user.setLoggingId(result.data._id)
+user.setWhoIsLoggedIn("provider")
 navigate("/dashbord")
 
     })

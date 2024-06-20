@@ -7,6 +7,7 @@ const servicesSchema = mongoose.Schema({
   serviceName:{ type: String,required:true},
   description: { type: String},
   image: { type: String},
+  category:{ type: String},
   price:{type:String,required:true}
 
   

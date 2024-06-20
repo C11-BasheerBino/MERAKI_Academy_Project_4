@@ -1,7 +1,11 @@
 import React, { useContext, useState } from "react";
 import axios from "axios"
 import { Link } from "react-router-dom";
+import { UserContext } from "../../App";
+
 const Login = () => {
+  const user = useContext(UserContext)
+
   const [loginMsg, setLoginMsg] = useState(false);
 
   const [userLogging, setUserLogging] = useState({});
@@ -10,6 +14,7 @@ const Login = () => {
     .post("http://localhost:5000/users/login", userLogging)
     .then((result) => {
 console.log(result.data);
+user.setLoggingId(result.data._id)
 
     })
     .catch((err) => {

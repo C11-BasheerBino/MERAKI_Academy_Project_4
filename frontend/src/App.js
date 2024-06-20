@@ -8,6 +8,7 @@ import AddService from "./components/Provider interface/AddNewServices";
 import ProviderRegister from "./components/Provider interface/ProviderRegister";
 import LoginAsProvider from "./components/Provider interface/ProviderLogin";
 import Fields from "./components/User interface/Fields";
+import ServicesOfField from "./components/User interface/ServicesOfField";
 
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/shared components/Navbar";
@@ -19,6 +20,7 @@ const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [loggingId, setLoggingId] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const[whoIsLoggedIn,setWhoIsLoggedIn]=useState('')
   return (
     <div className="App">
       <h1>Hello World!</h1>
@@ -30,6 +32,7 @@ const App = () => {
           setIsLoggedIn,
           loggingId,
           setLoggingId,
+          whoIsLoggedIn,setWhoIsLoggedIn
         }}
       >
         <Navigation />
@@ -40,12 +43,16 @@ const App = () => {
           <Route path="/providers/register" element={<ProviderRegister />} />
           <Route path="/dashbord" element={<Dashbord />} />
           <Route path="/providers/services" element={<Services />} />
-          <Route path="/providers/add_new_service" element={<AddService />} />
+          <Route path="/providers/add_new_service" element={<AddService/>} />
+          <Route path="/fields/*" element={<Fields/>}/>
+          <Route path="/admin/provider_requests" element={<ProviderRequest/>}/>
+
         </Routes>
 
         <div>test</div>
-        <Fields />
-<ProviderRequest/>
+        
+        <div>test01</div>
+
       </UserContext.Provider>
     </div>
   );

@@ -8,7 +8,11 @@ const user = useContext(UserContext)
 
     const Delete = (e) => {
         axios
-          .delete(`http://localhost:5000/services/${e.target.id}`)
+          .delete(`http://localhost:5000/services/${e.target.id}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          })
           .then((result) => {
             console.log("hello from delete", result.data);
             setDeleteService("deleted");
@@ -19,8 +23,8 @@ const user = useContext(UserContext)
       };
 
   const [showInputToUpdate, setShowInputToUpdate] = useState(false);
-  const ShowUpdateInputs = () => {
-    setShowInputToUpdate(true);
+  const ShowUpdateInputs = (e) => {
+    setShowInputToUpdate(e.target.id);
   };
   const [updateTitle, setUpdatedTitle] = useState();
   const [updatedDescription, setUpdatedDescription] = useState();
@@ -29,7 +33,11 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
     console.log(e.target.id);
     axios.put(
         `http://localhost:5000/services/${e.target.id}`,
-        {serviceName: updateTitle, description: updatedDescription }
+        {serviceName: updateTitle, description: updatedDescription }, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       )
       .then((result) => {
         setShowInputToUpdate(false);
@@ -45,7 +53,11 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
   const [services, setService] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/services/${user.loggingId}`) //edit the id to be variable from token
+      .get(`http://localhost:5000/services/${user.loggingId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }) //edit the id to be variable from token
       .then((result) => {
         console.log("service", result.data.services);
         setService(result.data.services);
@@ -61,7 +73,7 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
             <div>
               Name :{elem.serviceName}{" "}
               <div>
-                {showInputToUpdate && (
+                {showInputToUpdate ===elem._id && (
                   <input
                     placeholder="Title"
                     onChange={(e) => {
@@ -73,7 +85,7 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
               <p>
                 description {elem.description}
                 <div>
-                  {showInputToUpdate && (
+                  {showInputToUpdate ===elem._id && (
                     <input
                       placeholder="description"
                       onChange={(e) => {
@@ -82,12 +94,12 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
                     />
                   )}
                 </div>
-                {showInputToUpdate && <button id={elem._id} onClick={updateTheService}>save</button>}{" "}
+                {showInputToUpdate ===elem._id && <button id={elem._id} onClick={updateTheService}>save</button>}{" "}
               </p>
               <p>Category :- {elem.category}</p>{" "}
               <p>Price:{elem.price}$ per hour</p>
               <div>
-                <button onClick={ShowUpdateInputs}>update</button>
+                <button id={elem._id} onClick={ShowUpdateInputs}>update</button>
                 <button id={elem._id} onClick={Delete}>delete</button>
               </div>
             </div>

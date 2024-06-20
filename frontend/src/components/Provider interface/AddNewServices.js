@@ -27,7 +27,7 @@ const AddService = () => {
         serviceName: newServiceName,
         description: description,
         image: image,
-        category: serviceField,
+        category: serviceField || "Electrical",
         price: price,
       })
       .then((result) => {
@@ -65,11 +65,16 @@ const AddService = () => {
       />
       <label>
         Select Your Field:
-        <select value={serviceField}  onChange={e => setServiceField(e.target.value)}>
-          {allFields &&allFields.map(element=>{
-            return <option value={element.fieldName}>{element.fieldName}</option>
-          })}
-          
+        <select
+          value={serviceField}
+          onChange={(e) => setServiceField(e.target.value)}
+        >
+          {allFields &&
+            allFields.map((element) => {
+              return (
+                <option value={element.fieldName}>{element.fieldName}</option>
+              );
+            })}
         </select>
       </label>
       <input

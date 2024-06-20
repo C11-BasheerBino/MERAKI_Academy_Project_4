@@ -10,6 +10,7 @@ const createNewService = (req, res) => {
     description,
     image,
     price,
+    category:category,
   });
   service
     .save()
@@ -56,7 +57,7 @@ const getAllServices = (req, res) => {
     });
 };
 
-const getServiceById = (req, res) => {
+const getServiceByProvider = (req, res) => {
   const id = req.params.id; //must be taked from token
   servicesModel
     .find({ providerID: id })
@@ -120,10 +121,32 @@ const deleteServiceById = (req, res) => {
     });
 };
 
+const getServiceById = (req, res) => {
+  const id = req.params.id; 
+  servicesModel
+    .findOne({ _id: id })
+    .then((result) => {
+      const keys = {
+        success: true,
+        message: "All the Services",
+        services: result,
+      };
+      res.json(keys).status(200);
+    })
+    .catch((err) => {
+      const keys = {
+        success: false,
+        message: "Server Error",
+        err: err.message,
+      };
+      res.json(keys).status(500);
+    });
+};
 module.exports = {
   createNewService,
   getAllServices,
-  getServiceById,
+  getServiceByProvider,
   updateServiceById,
   deleteServiceById,
+  getServiceById,
 };
