@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 
-
 const Navigation = () => {
   const userStatus = useContext(UserContext);
 
@@ -10,7 +9,7 @@ const Navigation = () => {
     localStorage.setItem("token", null);
     userStatus.setToken(null);
     userStatus.setIsLoggedIn(false);
-    userStatus.setWhoIsLoggedIn(false)
+    userStatus.setWhoIsLoggedIn(false);
   };
   return (
     // inline styling in react
@@ -21,17 +20,20 @@ const Navigation = () => {
           <Link to="/dashbord"> Dashbord </Link>
           <Link to="/providers/services"> Providerservices </Link>
           <Link to="/providers/add_new_service"> add new service </Link>
-          <Link to="/users/login" onClick={logout}> Logout</Link>
+          <Link to="/providers/login" onClick={logout}>
+            {" "}
+            Logout
+          </Link>
         </div>
       )}
-          <Link to="/users/login"> Login </Link>
-          <Link to="/fields">Fields</Link>
+      <Link to="/users/login"> Login </Link>
+      <Link to="/fields">Fields</Link>
 
       {userStatus.whoIsLoggedIn === "user" && (
         <div>
           <Link to="/users/login"> Login </Link>
         </div>
-      ) }
+      )}
     </div>
   );
 };

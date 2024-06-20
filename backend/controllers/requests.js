@@ -96,9 +96,29 @@ const getAllRequests = (req,res)=>{
     })
 }
 
+const getRequestsByProviderID =(req,res)=>{
+    const provderId= req.params.provderId
+    requestsModel.find({providerId:provderId}).populate("serviceId userId providerId").then((result)=>{
+        const keys ={
+            success: true,
+            message: 'All the requests',
+            services: result
+        }
+        res.json(keys).status(200)
+    }).catch((err)=>{
+        const keys = {
+            success: false,
+            message: "Server Error",
+            err: err.message
+        }
+        res.json(keys).status(500)
+    })
+
+}
+
     
 
 
 
 
-module.exports={createRequestByUser,updateStatusByProvider,getRequestbyStatus,getAllRequests}
+module.exports={createRequestByUser,updateStatusByProvider,getRequestbyStatus,getAllRequests,getRequestsByProviderID}

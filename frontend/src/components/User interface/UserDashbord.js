@@ -1,16 +1,16 @@
+import React, { useState ,useEffect} from "react";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../App";
 
-const Dashbord = () => {
-  const user = useContext(UserContext)
+const UserDashbord =()=>{
     const [penddingData,setPenddingData]=useState()
+    const [acceptedData,setAcceptedData]=useState()
     const [history,setHistory]=useState([])//build backend get all rqeust then filter it without pendding
     useEffect(()=>{
-axios.get(`http://localhost:5000/requests/provider/${user.loggingId}`).then( (result)=>{
+axios.get("http://localhost:5000/requests/").then( (result)=>{
     console.log(result)
     setPenddingData(result.data.services.filter(element=>{return element.status==='Pendding'}))
-    setHistory(result.data.services.filter(element=>{return element.status!=='Pendding'}))
+    setAcceptedData(result.data.services.filter(element=>{return element.status==='Accepted'}))
+    setHistory(result.data.services.filter(element=>{return element.status!=='Pendding' && element.status!=="Accepted"}))
 })
     },[])
   return (
@@ -18,6 +18,10 @@ axios.get(`http://localhost:5000/requests/provider/${user.loggingId}`).then( (re
       <div className="sales"></div>
       <div className="pendding">
         {penddingData&&penddingData.map((element,i) => {
+            return (<div>{i+1}- service name:- {element.serviceId.serviceName}   status :-  {element.status}</div>)
+            
+        })}
+        {acceptedData&&acceptedData.map((element,i) => {
             return (<div>{i+1}- service name:- {element.serviceId.serviceName}   status :-  {element.status}</div>)
             
         })}
@@ -29,6 +33,6 @@ axios.get(`http://localhost:5000/requests/provider/${user.loggingId}`).then( (re
       </div>
     </div>
   );
-};
+}
 
-export default Dashbord
+export default UserDashbord

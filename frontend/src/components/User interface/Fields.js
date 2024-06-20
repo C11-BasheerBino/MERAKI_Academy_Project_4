@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState,createContext, useContext } from "react";
+import React, { useEffect, useState,createContext } from "react";
 import { Route,Routes, useNavigate } from "react-router-dom";
 import ServicesOfField from "./ServicesOfField";
-import { UserContext } from "../../App";
+
 
 
 export const ServiceContext = createContext();
 
 const Fields = () => {
-  const user = useContext(UserContext)
+ 
   const navigate=useNavigate()
   const [allFields, setAllFields] = useState();
   const [cardId,setCardId]=useState()
@@ -22,7 +22,7 @@ navigate("/fields/services")
   
   useEffect(() => {
     setIsParentVisible(true)
-    setLoggingId(user.loggingId)
+   
     axios
       .get("http://localhost:5000/fields")
       .then((result) => {

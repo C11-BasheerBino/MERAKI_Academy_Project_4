@@ -14,7 +14,7 @@ const Login = () => {
     .post("http://localhost:5000/users/login", userLogging)
     .then((result) => {
 console.log(result.data);
-user.setLoggingId(result.data._id)
+user.setLoggingId(result.data.userId)
 
     })
     .catch((err) => {
