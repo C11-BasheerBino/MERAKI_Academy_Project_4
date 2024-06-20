@@ -3,10 +3,12 @@ import React from "react";
 import axios from "axios";
 
  
-const Rate = () => {
+const Rate = ({collection}) => {
+  
     const ratingChanged = (newRating) => {
+      console.log(collection.providerId._id)
         console.log(newRating)
-       axios.post("http://localhost:5000/rate",{rate:newRating,userId:"6664901a407bb6f78e4c1039",providerId:"66747728915246a4151a4108"}).then((result)=>{
+       axios.post("http://localhost:5000/rate",{rate:newRating,userId:collection.userId,providerId:collection.providerId._id}).then((result)=>{
         console.log(result)
        })
     }

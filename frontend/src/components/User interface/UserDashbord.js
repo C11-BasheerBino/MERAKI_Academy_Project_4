@@ -33,9 +33,6 @@ const UserDashbord = () => {
       });
   }, []);
 
-  const rateProvider=()=>{
-console.log('finshied');
-  }
   return (
     <div>
       <div className="sales"></div>
@@ -63,8 +60,18 @@ console.log('finshied');
             return (
               <div>
                 {i + 1}- service name:- {element.serviceId.serviceName} status
-                :- {element.status} 
-                <div>Rate the worker {element.status === "Finished" && <Rate/>}</div>
+                :- {element.status}
+                <div>
+                  Rate the worker{" "}
+                  {element.status === "Finished" && (
+                    <Rate
+                      collection={{
+                        providerId: element.providerId,
+                        userId: element.userId._id,
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             );
           })}
