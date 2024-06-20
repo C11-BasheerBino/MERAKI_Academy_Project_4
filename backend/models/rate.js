@@ -2,10 +2,9 @@
 const mongoose = require("mongoose");
 
 const rateSchema = mongoose.Schema({
-  userID: {type: mongoose.Schema.Types.ObjectId, ref: "user"},
+  userId: {type: mongoose.Schema.Types.ObjectId, ref: "user",},
   rate:{ type: Number,required:true},
-  comment: { type: String},
-
+  providerId:{type: mongoose.Schema.Types.ObjectId, ref: "provider",}
 
   
 });

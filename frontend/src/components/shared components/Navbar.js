@@ -28,6 +28,7 @@ const Navigation = () => {
       )}
       <Link to="/users/login"> Login </Link>
       <Link to="/fields">Fields</Link>
+      <Link to="/users/dashbord">Dashbord</Link>
 
       {userStatus.whoIsLoggedIn === "user" && (
         <div>

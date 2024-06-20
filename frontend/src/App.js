@@ -12,6 +12,7 @@ import UserDashbord from "./components/User interface/UserDashbord";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/shared components/Navbar";
 import ProviderRequest from "./components/Admin_dashbbord/ProviderRequests";
+import Rate from "./components/shared components/Rate"
 
 export const UserContext = createContext();
 
@@ -19,7 +20,7 @@ const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [loggingId, setLoggingId] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const[whoIsLoggedIn,setWhoIsLoggedIn]=useState('')
+  const [whoIsLoggedIn, setWhoIsLoggedIn] = useState("");
   return (
     <div className="App">
       <h1>Hello World!</h1>
@@ -31,25 +32,29 @@ const App = () => {
           setIsLoggedIn,
           loggingId,
           setLoggingId,
-          whoIsLoggedIn,setWhoIsLoggedIn
+          whoIsLoggedIn,
+          setWhoIsLoggedIn,
         }}
       >
         <Navigation />
         <Routes>
           <Route path="/users/register" element={<Register />} />
           <Route path="/users/login" element={<Login />} />
+          <Route path="/users/dashbord" element={<UserDashbord />} />
           <Route path="/providers/login" element={<LoginAsProvider />} />
           <Route path="/providers/register" element={<ProviderRegister />} />
           <Route path="/dashbord" element={<Dashbord />} />
           <Route path="/providers/services" element={<Services />} />
-          <Route path="/providers/add_new_service" element={<AddService/>} />
-          <Route path="/fields/*" element={<Fields/>}/>
-          <Route path="/admin/provider_requests" element={<ProviderRequest/>}/>
-
+          <Route path="/providers/add_new_service" element={<AddService />} />
+          <Route path="/fields/*" element={<Fields />} />
+          <Route
+            path="/admin/provider_requests"
+            element={<ProviderRequest />}
+          />
         </Routes>
 
         <div>test</div>
-        
+     
         <div>test01</div>
       </UserContext.Provider>
     </div>

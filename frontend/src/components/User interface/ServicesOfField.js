@@ -16,6 +16,7 @@ const ServicesOfField = () => {
 
   const sendRequest = (e) => {
     const [id, providerId] = e.target.id.split(" ");
+    console.log(user.loggingId)
     axios
       .post("http://localhost:5000/requests", {
         providerId: providerId,

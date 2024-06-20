@@ -9,8 +9,8 @@ const Dashbord = () => {
     useEffect(()=>{
 axios.get(`http://localhost:5000/requests/provider/${user.loggingId}`).then( (result)=>{
     console.log(result)
-    setPenddingData(result.data.services.filter(element=>{return element.status==='Pendding'}))
-    setHistory(result.data.services.filter(element=>{return element.status!=='Pendding'}))
+    result.data.services && setPenddingData(result.data.services.filter(element=>{return element.status==='Pendding'}))
+    result.data.services && setHistory(result.data.services.filter(element=>{return element.status!=='Pendding'}))
 })
     },[])
   return (
