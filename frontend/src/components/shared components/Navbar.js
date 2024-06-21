@@ -26,15 +26,23 @@ const Navigation = () => {
           </Link>
         </div>
       )}
-      <Link to="/users/login"> Login </Link>
-      <Link to="/fields">Fields</Link>
-      <Link to="/users/dashbord">Dashbord</Link>
 
-      {userStatus.whoIsLoggedIn === "user" && (
+{userStatus.whoIsLoggedIn === "user" && userStatus.whoIsLoggedIn !=="provider" &&(
         <div>
-          <Link to="/users/login"> Login </Link>
-        </div>
-      )}
+         <Link to="/users/dashbord">Dashbord</Link>
+         <Link to="/fields">Fields</Link>
+         
+          <Link to="/users/login" onClick={logout}>
+            {" "}
+            Logout
+          </Link>
+        </div>)
+      }
+      
+     
+      
+
+      
     </div>
   );
 };

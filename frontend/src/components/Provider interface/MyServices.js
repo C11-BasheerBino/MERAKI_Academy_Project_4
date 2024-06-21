@@ -1,26 +1,27 @@
 import axios from "axios";
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
+import { Button, Card,ListGroup,Stack } from "react-bootstrap";
 
 const Services = () => {
-const user = useContext(UserContext)
+  const user = useContext(UserContext);
   const [deleteService, setDeleteService] = useState();
 
-    const Delete = (e) => {
-        axios
-          .delete(`http://localhost:5000/services/${e.target.id}`, {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          })
-          .then((result) => {
-            console.log("hello from delete", result.data);
-            setDeleteService("deleted");
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-      };
+  const Delete = (e) => {
+    axios
+      .delete(`http://localhost:5000/services/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((result) => {
+        console.log("hello from delete", result.data);
+        setDeleteService("deleted");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
 
   const [showInputToUpdate, setShowInputToUpdate] = useState(false);
   const ShowUpdateInputs = (e) => {
@@ -28,12 +29,14 @@ const user = useContext(UserContext)
   };
   const [updateTitle, setUpdatedTitle] = useState();
   const [updatedDescription, setUpdatedDescription] = useState();
-const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
-  const updateTheService = (e)=>{
+  const [renderUpdateFunc, setRenderUpdateFunc] = useState(0);
+  const updateTheService = (e) => {
     console.log(e.target.id);
-    axios.put(
+    axios
+      .put(
         `http://localhost:5000/services/${e.target.id}`,
-        {serviceName: updateTitle, description: updatedDescription }, {
+        { serviceName: updateTitle, description: updatedDescription },
+        {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -41,14 +44,13 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
       )
       .then((result) => {
         setShowInputToUpdate(false);
-        setRenderUpdateFunc(renderUpdateFunc+1);
+        setRenderUpdateFunc(renderUpdateFunc + 1);
         console.log(result.data.message);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
-  
 
   const [services, setService] = useState([]);
   useEffect(() => {
@@ -63,49 +65,66 @@ const [renderUpdateFunc,setRenderUpdateFunc]=useState(0)
         setService(result.data.services);
       })
       .catch((err) => {});
-  }, [renderUpdateFunc,deleteService]);
+  }, [renderUpdateFunc, deleteService]);
 
   return (
-    <div>
+    <Stack direction="horizontal" gap={3} style={{display:"flex",flexDirection:"row",wrap:true}}>
       {services &&
         services.map((elem) => {
           return (
-            <div>
-              Name :{elem.serviceName}{" "}
-              <div>
-                {showInputToUpdate ===elem._id && (
-                  <input
-                    placeholder="Title"
-                    onChange={(e) => {
-                      setUpdatedTitle(e.target.value);
-                    }}
-                  />
-                )}
-              </div>{" "}
-              <p>
-                description {elem.description}
-                <div>
-                  {showInputToUpdate ===elem._id && (
+            <Card style={{ width: "24rem" }}>
+              <Card.Body>
+                <Card.Title>{elem.serviceName} </Card.Title>
+                
+                  {showInputToUpdate === elem._id && (
                     <input
-                      placeholder="description"
+                      placeholder="Title"
                       onChange={(e) => {
-                        setUpdatedDescription(e.target.value);
+                        setUpdatedTitle(e.target.value);
                       }}
                     />
                   )}
-                </div>
-                {showInputToUpdate ===elem._id && <button id={elem._id} onClick={updateTheService}>save</button>}{" "}
-              </p>
-              <p>Category :- {elem.category}</p>{" "}
-              <p>Price:{elem.price}$ per hour</p>
-              <div>
-                <button id={elem._id} onClick={ShowUpdateInputs}>update</button>
-                <button id={elem._id} onClick={Delete}>delete</button>
-              </div>
-            </div>
+                {" "}
+                <Card.Text>
+                  description {elem.description}
+                  <div>
+                    {showInputToUpdate === elem._id && (
+                      <input
+                        placeholder="description"
+                        onChange={(e) => {
+                          setUpdatedDescription(e.target.value);
+                        }}
+                      />
+                    )}
+                  </div>
+                  {showInputToUpdate === elem._id && (
+                   <Button variant="secondary" id={elem._id} onClick={updateTheService}>
+                      save
+                    </Button>
+                  )}{" "}
+                </Card.Text>
+                <ListGroup className="list-group-flush">
+                  <ListGroup.Item>Category :- {elem.category}</ListGroup.Item>{" "}
+                  <ListGroup.Item>Price:{elem.price}$ per hour</ListGroup.Item>
+                
+                <ListGroup.Item>
+                  <Button
+                    variant="primary"
+                    id={elem._id}
+                    onClick={ShowUpdateInputs}
+                  >
+                    update
+                  </Button>{"    "}
+                  <Button variant="secondary" id={elem._id} onClick={Delete}>
+                    delete
+                  </Button>
+                  </ListGroup.Item>
+                  </ListGroup>
+              </Card.Body>
+            </Card>
           );
         })}
-    </div>
+    </Stack>
   );
 };
 

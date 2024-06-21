@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import axios from "axios"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
 const Login = () => {
+  const navigate= useNavigate()
   const user = useContext(UserContext)
 
   const [loginMsg, setLoginMsg] = useState(false);
@@ -15,6 +16,8 @@ const Login = () => {
     .then((result) => {
 console.log(result.data);
 user.setLoggingId(result.data.userId)
+user.setWhoIsLoggedIn("user")
+navigate("/users/dashbord")
 
     })
     .catch((err) => {

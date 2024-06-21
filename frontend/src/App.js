@@ -12,7 +12,9 @@ import UserDashbord from "./components/User interface/UserDashbord";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/shared components/Navbar";
 import ProviderRequest from "./components/Admin_dashbbord/ProviderRequests";
-import Rate from "./components/shared components/Rate"
+import logo from "./M.png"
+
+
 
 export const UserContext = createContext();
 
@@ -23,7 +25,7 @@ const App = () => {
   const [whoIsLoggedIn, setWhoIsLoggedIn] = useState("");
   return (
     <div className="App">
-      <h1>Hello World!</h1>
+      <h1><img src={logo} alt="logo" width="120" height="180"/>  MAIINTAIN SOLUTIONS</h1> 
       <UserContext.Provider
         value={{
           token,
@@ -52,10 +54,6 @@ const App = () => {
             element={<ProviderRequest />}
           />
         </Routes>
-
-        <div>test</div>
-     
-        <div>test01</div>
       </UserContext.Provider>
     </div>
   );
