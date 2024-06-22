@@ -80,6 +80,7 @@ const loginUser = (req, res) => {
           massage: "Valid login credentials",
           userId: result._id,
           token: token,
+          role: result.role,
         };
         return res.json(keys).status(200);
       } catch (error) {

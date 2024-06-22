@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
+import { Form, Button,Stack } from "react-bootstrap";
 
 const AddService = () => {
   const [allFields, setAllFields] = useState();
@@ -17,16 +18,18 @@ const AddService = () => {
   const [newServiceName, setNewServiceName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
+  const [imgUrl, setImgUrl] = useState();
   const [serviceField, setServiceField] = useState();
   const [price, setPrice] = useState();
   const user = useContext(UserContext);
   const addService = () => {
+    
     axios
       .post("http://localhost:5000/services", {
         providerID: user.loggingId,
         serviceName: newServiceName,
         description: description,
-        image: image,
+        image: imgUrl,
         category: serviceField || "Electrical",
         price: price,
       })
@@ -36,10 +39,26 @@ const AddService = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}
+const upload = ()=>{
+  const data = new FormData();
+  data.append("file", image);
+  console.log(image);
+  data.append("upload_preset", "maintain solutions");
+  data.append("cloud_name", "dkr5xxdly");
+  fetch("https://api.cloudinary.com/v1_1/dkr5xxdly/image/upload", {
+    method: "post",
+    body: data,
+  })
+    .then((resp) => resp.json())
+    .then((data) => {
+      setImgUrl(data.url);
+    })
+    .catch((err) => console.log(err));
 
+}
     ///
-  };
+  
   return (
     <div>
       <input
@@ -56,13 +75,19 @@ const AddService = () => {
           setDescription(e.target.value);
         }}
       />
-      <input
-        type="text"
-        placeholder="image link"
-        onChange={(e) => {
-          setImage(e.target.value);
-        }}
-      />
+      <Stack direction="horizontal" gap={3}>
+      
+    
+        <Form.Group controlId="formFile" className="p-2">
+          <Form.Control
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])} style={{width:"300px"}}
+          />
+          </Form.Group>
+          <Button variant="primary"   className="p-2" onClick={upload}>upload</Button>
+        
+      </Stack>
+
       <label>
         Select Your Field:
         <select

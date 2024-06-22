@@ -8,6 +8,7 @@ const {
   getAllRequests,
   getRequestsByProviderID,
   getRequestsByUserID,
+  updateTime,
 } = require("../controllers/requests");
 
 requestsRouter.post("/", createRequestByUser);
@@ -16,5 +17,6 @@ requestsRouter.get("/:status", getRequestbyStatus);
 requestsRouter.get("/", getAllRequests);
 requestsRouter.get("/provider/:provderId", getRequestsByProviderID);
 requestsRouter.get("/user/:userId", getRequestsByUserID);
+requestsRouter.put("/time/:id",updateTime)
 
 module.exports = requestsRouter;

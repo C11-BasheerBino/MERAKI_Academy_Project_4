@@ -12,6 +12,8 @@ const createRequestByUser = (req, res) => {
     serviceId,
     status: "Pendding",
     providerId,
+    startTime:0,
+    finishTime:0,
   });
 
   request
@@ -147,6 +149,31 @@ const getRequestsByUserID = (req, res) => {
     });
 };
 
+const updateTime =(req,res)=>{
+  const startTime = req.body.startTime;
+  const finishTime = req.body.finishTime;
+  const _id = req.params.id; //! just for test
+  console.log(_id)
+  requestsModel
+    .findByIdAndUpdate({ _id }, { startTime, finishTime, }, { new: true })
+    .then((result) => {
+      const keys = {
+        success: true,
+        message: `time is collected`,
+        services: result,
+      };
+      res.json(keys).status(200);
+    })
+    .catch((err) => {
+      const keys = {
+        success: false,
+        message: "Server Error",
+        err: err.message,
+      };
+      res.json(keys).status(500);
+    });
+}
+
 module.exports = {
   createRequestByUser,
   updateStatusByProvider,
@@ -154,4 +181,5 @@ module.exports = {
   getAllRequests,
   getRequestsByProviderID,
   getRequestsByUserID,
+  updateTime,
 };

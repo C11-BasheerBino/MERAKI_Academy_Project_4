@@ -73,6 +73,7 @@ const Services = () => {
         services.map((elem) => {
           return (
             <Card style={{ width: "24rem" }}>
+              <Card.Img variant="top" src={elem.image} />
               <Card.Body>
                 <Card.Title>{elem.serviceName} </Card.Title>
                 

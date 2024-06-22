@@ -6,6 +6,8 @@ const requestsSchema = mongoose.Schema({
     serviceId: {type: mongoose.Schema.Types.ObjectId, ref: "service"},
     status: {type:String,required:true},
     providerId: {type: mongoose.Schema.Types.ObjectId, ref: "provider"},
+    startTime:{type:Number},
+    finishTime:{type:Number},
 
 
   

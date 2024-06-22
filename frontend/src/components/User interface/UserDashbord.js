@@ -8,6 +8,7 @@ const UserDashbord = () => {
   const [penddingData, setPenddingData] = useState();
   const [acceptedData, setAcceptedData] = useState();
   const [history, setHistory] = useState([]); //build backend get all rqeust then filter it without pendding
+  const [rated,setRated]=useState()
   useEffect(() => {
     axios
       .get(`http://localhost:5000/requests/user/${user.loggingId}`)
@@ -31,7 +32,8 @@ const UserDashbord = () => {
           })
         );
       });
-  }, []);
+  }, [rated]);
+
 
   return (
     <div>
@@ -63,8 +65,22 @@ const UserDashbord = () => {
                 :- {element.status}
                 <div>
                   Rate the worker{" "}
-                  {element.status === "Finished" && (
+                  {element.status === "Finished" &&  !rated && ( 
                     <Rate
+                    onUpdateSucceed = {()=>{
+                      console.log(element._id)
+setRated("Rated")
+axios.put(`http://localhost:5000/requests/${element._id}`,{ status: "Finished and Rated" }).then((result)=>{
+  console.log(result)
+}).catch((err)=>{
+  console.log(err)
+})
+                      
+                      // copy state acceptedData
+                      // loop state to find elem id === element.id
+                      // change the status to rated
+                      // setAcceptedData
+                    }}
                       collection={{
                         providerId: element.providerId,
                         userId: element.userId._id,

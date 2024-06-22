@@ -11,12 +11,14 @@ const Login = () => {
 
   const [userLogging, setUserLogging] = useState({});
   const login = () => {
+    
     axios
     .post("http://localhost:5000/users/login", userLogging)
     .then((result) => {
-console.log(result.data);
+console.log(result.data.role.role);
 user.setLoggingId(result.data.userId)
 user.setWhoIsLoggedIn("user")
+
 navigate("/users/dashbord")
 
     })
