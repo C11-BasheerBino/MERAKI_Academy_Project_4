@@ -16,7 +16,14 @@ const Login = () => {
     .post("http://localhost:5000/users/login", userLogging)
     .then((result) => {
 console.log(result.data.role.role);
+
+localStorage.setItem("token", result.data.token);
+user.setToken(result.data.token);
+
+localStorage.setItem("loggingId", result.data.userId);
 user.setLoggingId(result.data.userId)
+
+localStorage.setItem("loggedInRole", 'user');
 user.setWhoIsLoggedIn("user")
 
 navigate("/users/dashbord")

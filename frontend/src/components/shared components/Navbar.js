@@ -10,6 +10,12 @@ const Navigation = () => {
     userStatus.setToken(null);
     userStatus.setIsLoggedIn(false);
     userStatus.setWhoIsLoggedIn(false);
+
+    localStorage.setItem("loggingId",null )
+    userStatus.setLoggingId('');
+  
+    localStorage.setItem("loggedInRole", '');
+    userStatus.setWhoIsLoggedIn("");
   };
   return (
     // inline styling in react

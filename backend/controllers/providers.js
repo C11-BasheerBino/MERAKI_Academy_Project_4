@@ -97,6 +97,7 @@ const loginProvider = (req, res) => {
           success: true,
           message: "Valid login credentials",
           token: token,
+          role: result,
         };
         return res.json(keys).status(200);
       } catch (error) {

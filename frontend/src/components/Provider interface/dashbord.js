@@ -17,6 +17,7 @@ const Dashbord = () => {
       .get(`http://localhost:5000/requests/provider/${user.loggingId}`)
       .then((result) => {
         console.log(result.data.services);
+      
         result.data.services &&
           setPenddingData(
             result.data.services.filter((element) => {
@@ -163,15 +164,16 @@ const Dashbord = () => {
                 :- {element.status} 
                 <div >
                     {" "}
-                    {Math.trunc(finishTime - startTime)} hours{" "}
+                    {Math.trunc(element.finishTime - element.startTime)} hours{" "}
                     {Math.trunc(
-                      (finishTime -
-                        startTime -
-                        Math.trunc(finishTime - startTime)) *
+                      (element.finishTime -
+                        element.startTime -
+                        Math.trunc(element.finishTime - element.startTime)) *
                         60
                     )}{" "}
                     minutes{" "}
                   </div>
+                  <div> price ={(element.finishTime - element.startTime)*element.serviceId.price} $ </div>
               </div>
             );
           })}

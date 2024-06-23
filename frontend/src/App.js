@@ -20,9 +20,9 @@ export const UserContext = createContext();
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [loggingId, setLoggingId] = useState();
+  const [loggingId, setLoggingId] = useState(localStorage.getItem("loggingId") || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [whoIsLoggedIn, setWhoIsLoggedIn] = useState("");
+  const [whoIsLoggedIn, setWhoIsLoggedIn] = useState(localStorage.getItem("loggedInRole") || null);
   return (
     <div className="App">
       <h1><img src={logo} alt="logo" width="120" height="180"/>  MAIINTAIN SOLUTIONS</h1> 

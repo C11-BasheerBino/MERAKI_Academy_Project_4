@@ -64,8 +64,12 @@ const UserDashbord = () => {
                 {i + 1}- service name:- {element.serviceId.serviceName} status
                 :- {element.status}
                 <div>
-                  Rate the worker{" "}
+              
+                  
                   {element.status === "Finished" &&  !rated && ( 
+                    <div>
+                    <p>Rate the worker{" "}</p>
+                    <div> price ={(element.finishTime - element.startTime)*element.serviceId.price} $ </div>
                     <Rate
                     onUpdateSucceed = {()=>{
                       console.log(element._id)
@@ -85,7 +89,7 @@ axios.put(`http://localhost:5000/requests/${element._id}`,{ status: "Finished an
                         providerId: element.providerId,
                         userId: element.userId._id,
                       }}
-                    />
+                    /></div>
                   )}
                 </div>
               </div>
