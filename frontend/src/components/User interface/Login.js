@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import axios from "axios"
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
+import {Button,TextField,Link,ThemeProvider,Container} from '@mui/material/';
 
 const Login = () => {
   const navigate= useNavigate()
@@ -34,30 +35,48 @@ navigate("/users/dashbord")
     });
   };
   return (
-    <div style={{display:"flex",flexDirection:"column",width:"30%",gap:"10px",alignItems:"center"}}>
-      <div>Login by entering your email address and password</div>
-
-      <label>Email</label>
-      <input
-        type="email"
-        placeholder="Email"
+    <Container component="main" maxWidth="xs">
+      <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
         onChange={(e) => {
           setUserLogging({ email: e.target.value });
         }}
       />
 
-      <label>Password</label>
-      <input
-        type="password"
-        placeholder="Password"
+<TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
         onChange={(e) => {
           setUserLogging({ ...userLogging, password: e.target.value });
         }}
       />
-      <button onClick={login}>Login</button>
-      <button ><Link to="/providers/login" >Login as Provider</Link></button>
-      <div>don't have an account ?  <a href="./register">Register here</a></div>
-    </div>
+      <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }} onClick={login}>Login</Button>
+      <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }} onClick={ ()=>{navigate("/providers/login")}} >Login as Provider</Button>
+              <Link href="./register" variant="body2">
+                  {" don't have an account ? Register here "}
+                </Link>
+    </Container>
   );
 };
 
