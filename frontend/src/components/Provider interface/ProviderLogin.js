@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../App";
 import { useNavigate } from "react-router-dom";
+import {Button,TextField,Link,ThemeProvider,Container} from '@mui/material/';
+
 
 const LoginAsProvider = () => {
   const navigate = useNavigate();
@@ -28,41 +30,48 @@ const LoginAsProvider = () => {
       .catch((err) => {});
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "30%",
-        gap: "10px",
-        alignItems: "center",
-      }}
-    >
-      <div>Login by entering your email address and password</div>
-
-      <label>Email</label>
-      <input
-        type="email"
-        placeholder="Email"
+    
+    
+      <Container component="main" maxWidth="xs">
+      <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
         onChange={(e) => {
           setProviderLogging({ email: e.target.value });
         }}
       />
 
-      <label>Password</label>
-      <input
-        type="password"
-        placeholder="Password"
+<TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
         onChange={(e) => {
           setProviderLogging({ ...providerLogging, password: e.target.value });
         }}
       />
-      <button onClick={ProviderLogin}>Login</button>
+       <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }} onClick={ProviderLogin}>Login</Button>
+<Link href="./register" variant="body2">
+                  {" Start your Maintence career from here"}
+                </Link>
 
-      <div>
-        Start your Maintence career <a href="./register">from here</a>
-      </div>
       {loginMsg && <div>{loginMsg}</div>}
-    </div>
+    </Container>
+    
   );
 };
 
