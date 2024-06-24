@@ -12,6 +12,7 @@ import UserDashbord from "./components/User interface/UserDashbord";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/shared components/Navbar";
 import ProviderRequest from "./components/Admin_dashbbord/ProviderRequests";
+import ServicesOfField from "./components/User interface/ServicesOfField"
 import logo from "./M.png"
 
 
@@ -23,6 +24,8 @@ const App = () => {
   const [loggingId, setLoggingId] = useState(localStorage.getItem("loggingId") || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [whoIsLoggedIn, setWhoIsLoggedIn] = useState(localStorage.getItem("loggedInRole") || null);
+  const [allFields, setAllFields] = useState();
+  const [cardId, setCardId] = useState();
   return (
     <div className="App">
       <h1><img src={logo} alt="logo" width="120" height="180"/>  MAIINTAIN SOLUTIONS</h1> 
@@ -36,6 +39,10 @@ const App = () => {
           setLoggingId,
           whoIsLoggedIn,
           setWhoIsLoggedIn,
+          cardId,
+          setCardId,
+          allFields,
+          setAllFields,
         }}
       >
         <Navigation />
@@ -49,6 +56,7 @@ const App = () => {
           <Route path="/providers/services" element={<Services />} />
           <Route path="/providers/add_new_service" element={<AddService />} />
           <Route path="/fields/*" element={<Fields />} />
+          <Route path="fields/services" element={<ServicesOfField />} />
           <Route
             path="/admin/provider_requests"
             element={<ProviderRequest />}

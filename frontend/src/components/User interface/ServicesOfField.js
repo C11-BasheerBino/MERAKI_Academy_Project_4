@@ -1,22 +1,27 @@
-import React, { useContext, useEffect } from "react";
-import { ServiceContext } from "./Fields";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../App";
+import {
+  Stack,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+  Alert,
+ 
+} from "@mui/material/";
 
 const ServicesOfField = () => {
-  const services = useContext(ServiceContext);
   const user = useContext(UserContext);
-  const selectedFieldServices = services.allFields.filter((Element) => {
-    return Element._id === services.cardId;
+  const [requestMsg, setRequestMsg] = useState("");
+  const [myServiceId,setMyServiceId]=useState('')
+  const selectedFieldServices = user.allFields.filter((Element) => {
+    return Element._id === user.cardId;
   });
-  console.log("hello from services", selectedFieldServices);
-  useEffect(() => {
-    services.setIsParentVisible(false);
-  }, []);
+ 
 
-  const sendRequest = (e) => {
-    const [id, providerId] = e.target.id.split(" ");
-    console.log(user.loggingId)
+  const sendRequest = (id, providerId) => {
     axios
       .post("http://localhost:5000/requests", {
         providerId: providerId,
@@ -24,43 +29,55 @@ const ServicesOfField = () => {
         userId: user.loggingId,
       })
       .then((result) => {
-        console.log(result);
+        setRequestMsg(result.data.message);
+        setMyServiceId(id)
       });
-    /*axios.get(`http://localhost:5000/services/oneService/${e.target.id}`).then((result)=>{
- 
-  const service = result.data.services
-  console.log("my",service);
-  axios.post("http://localhost:5000/requests",{
-    providerId:service.providerId
-    serviceId
-  })
-})*/
   };
 
   return (
-    <div>
+    <Stack
+      spacing={{ xs: 2, sm: 4 }}
+      direction="row"
+      useFlexGap
+      flexWrap="wrap"
+      justifyContent="center"
+      alignItems="center"
+      mt={4}
+    >
       {selectedFieldServices[0].services.map((element) => {
         return (
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-          >
-            <div>Title : {element.serviceName}</div>
-            <img
-              src={element.image}
-              alt={"picture of " + element.serviceName}
+          <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              sx={{ height: 140 }}
+              image={element.image}
+              title={element.serviceName}
             />
-            <div>Description : {element.description}</div>
-            <div>Price : {element.price} per hour</div>
-            <button
-              id={element._id + " " + element.providerID}
-              onClick={sendRequest}
-            >
-              Send Request
-            </button>
-          </div>
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="div">
+                {element.serviceName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {element.description}
+              </Typography>
+              <Typography variant="h5" color="text.secondary">
+                Price : {element.price} per hour
+              </Typography>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  sendRequest(element._id, element.providerID);
+                }}
+              >
+                Send Request
+              </Button>
+              {requestMsg && myServiceId ===element._id && (
+                <Alert severity="success">{requestMsg}</Alert>
+              )}
+            </CardContent>
+          </Card>
         );
       })}
-    </div>
+    </Stack>
   );
 };
 
