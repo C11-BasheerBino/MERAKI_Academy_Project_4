@@ -17,6 +17,7 @@ import logo from "./M.png"
 
 
 
+
 export const UserContext = createContext();
 
 const App = () => {
@@ -56,7 +57,8 @@ const App = () => {
           <Route path="/providers/services" element={<Services />} />
           <Route path="/providers/add_new_service" element={<AddService />} />
           <Route path="/fields/*" element={<Fields />} />
-          <Route path="fields/services" element={<ServicesOfField />} />
+          <Route path="/fields/services" element={<ServicesOfField />} />
+          <Route path="/" element={<Navigation/>} />
           <Route
             path="/admin/provider_requests"
             element={<ProviderRequest />}

@@ -4,6 +4,7 @@ import { UserContext } from "../../App";
 
 const Navigation = () => {
   const userStatus = useContext(UserContext);
+  console.log("hello Nav");
 
   const logout = () => {
     localStorage.setItem("token", null);

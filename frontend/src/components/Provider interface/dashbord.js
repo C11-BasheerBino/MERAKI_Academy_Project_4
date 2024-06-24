@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import { Button } from "react-bootstrap";
+
 
 const Dashbord = () => {
   const user = useContext(UserContext);
@@ -125,14 +125,14 @@ const Dashbord = () => {
               <div>
                 {i + 1}- service name:- {element.serviceId.serviceName} status
                 :- {element.status}{" "}
-                <Button variant="primary" onClick={()=>{
+                <button  onClick={()=>{
                   Accept(element._id)
                 }} id={element._id}>
                   Accept
-                </Button>{" "}
-                <Button variant="danger" onClick={Reject} id={element._id}>
+                </button>{" "}
+                <button onClick={Reject} id={element._id}>
                   X
-                </Button>{" "}
+                </button>{" "}
               </div>
             );
           })}

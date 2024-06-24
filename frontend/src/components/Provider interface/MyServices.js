@@ -1,15 +1,25 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
-import { Button, Card,ListGroup,Stack } from "react-bootstrap";
+import {
+  Stack,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material/";
+
+
 
 const Services = () => {
   const user = useContext(UserContext);
   const [deleteService, setDeleteService] = useState();
 
-  const Delete = (e) => {
+  const Delete = (id) => {
     axios
-      .delete(`http://localhost:5000/services/${e.target.id}`, {
+      .delete(`http://localhost:5000/services/${id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -24,17 +34,17 @@ const Services = () => {
   };
 
   const [showInputToUpdate, setShowInputToUpdate] = useState(false);
-  const ShowUpdateInputs = (e) => {
-    setShowInputToUpdate(e.target.id);
+  const ShowUpdateInputs = (id) => {
+    setShowInputToUpdate(id);
   };
   const [updateTitle, setUpdatedTitle] = useState();
   const [updatedDescription, setUpdatedDescription] = useState();
   const [renderUpdateFunc, setRenderUpdateFunc] = useState(0);
-  const updateTheService = (e) => {
-    console.log(e.target.id);
+  const updateTheService = (id) => {
+ 
     axios
       .put(
-        `http://localhost:5000/services/${e.target.id}`,
+        `http://localhost:5000/services/${id}`,
         { serviceName: updateTitle, description: updatedDescription },
         {
           headers: {
@@ -68,60 +78,90 @@ const Services = () => {
   }, [renderUpdateFunc, deleteService]);
 
   return (
-    <Stack direction="horizontal" gap={3} style={{display:"flex",flexDirection:"row",wrap:true}}>
+    <Stack
+    spacing={{ xs: 2, sm: 4 }}
+    direction="row"
+    useFlexGap
+    flexWrap="wrap"
+    justifyContent="center"
+    alignItems="center"
+    mt={4}
+  >
       {services &&
         services.map((elem) => {
           return (
-            <Card style={{ width: "24rem" }}>
-              <Card.Img variant="top" src={elem.image} />
-              <Card.Body>
-                <Card.Title>{elem.serviceName} </Card.Title>
-                
-                  {showInputToUpdate === elem._id && (
-                    <input
-                      placeholder="Title"
+            <Card sx={{ maxWidth: 345 }}>
+               <CardMedia
+                  sx={{ height: 140 }}
+                  image={elem.image}
+                  title={elem.serviceName}
+                />
+             <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                  >
+                  {elem.serviceName}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {elem.description}
+                  </Typography>
+                {showInputToUpdate === elem._id && (<Stack spacing={2}>
+                    <TextField id="standard-basic" label="Title" variant="standard" 
                       onChange={(e) => {
                         setUpdatedTitle(e.target.value);
-                      }}
-                    />
-                  )}
-                {" "}
-                <Card.Text>
-                  description {elem.description}
-                  <div>
-                    {showInputToUpdate === elem._id && (
-                      <input
-                        placeholder="description"
+                      }  }/>  
+                     <TextField
+          id="standard-multiline-static"
+          label="Description"
+          multiline
+          rows={4}
+          defaultValue=""
+          variant="standard"
                         onChange={(e) => {
                           setUpdatedDescription(e.target.value);
                         }}
                       />
-                    )}
-                  </div>
-                  {showInputToUpdate === elem._id && (
-                   <Button variant="secondary" id={elem._id} onClick={updateTheService}>
+                     <Button variant="contained"  onClick={()=>{
+                        updateTheService(elem._id)
+                      }}>
                       save
                     </Button>
-                  )}{" "}
-                </Card.Text>
-                <ListGroup className="list-group-flush">
-                  <ListGroup.Item>Category :- {elem.category}</ListGroup.Item>{" "}
-                  <ListGroup.Item>Price:{elem.price}$ per hour</ListGroup.Item>
-                
-                <ListGroup.Item>
-                  <Button
-                    variant="primary"
-                    id={elem._id}
-                    onClick={ShowUpdateInputs}
+                    <Button variant="outlined" onClick={()=>{
+                      setShowInputToUpdate(false)
+
+                    }}>cancel</Button>
+                      </Stack>)
+                      
+                      }
+                    <Typography variant="body2" color="text.secondary">
+                    {elem.category}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary">
+                  Price:{elem.price}$ per hour
+                  </Typography>
+
+
+                                </CardContent>
+
+                 <Button variant="contained"
+                   
+                    onClick={()=>{
+                      ShowUpdateInputs(elem._id)
+                    }}
                   >
                     update
                   </Button>{"    "}
-                  <Button variant="secondary" id={elem._id} onClick={Delete}>
+                  
+                 < Button variant="outlined"    onClick={()=>{
+                  Delete(elem._id)
+                 }}>
                     delete
                   </Button>
-                  </ListGroup.Item>
-                  </ListGroup>
-              </Card.Body>
+                  
+              
             </Card>
           );
         })}

@@ -1,7 +1,15 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import { Form, Button,Stack } from "react-bootstrap";
+import {
+  Stack,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material/";
 
 const AddService = () => {
   const [allFields, setAllFields] = useState();
@@ -60,7 +68,12 @@ const upload = ()=>{
     ///
   
   return (
-    <div>
+    <Stack
+  justifyContent="center"
+  alignItems="center"
+  spacing={2}
+  mt={4}
+>
       <input
         type="text"
         placeholder="Service name"
@@ -75,18 +88,18 @@ const upload = ()=>{
           setDescription(e.target.value);
         }}
       />
-      <Stack direction="horizontal" gap={3}>
+      
       
     
-        <Form.Group controlId="formFile" className="p-2">
-          <Form.Control
+      
+          <input
             type="file"
             onChange={(e) => setImage(e.target.files[0])} style={{width:"300px"}}
           />
-          </Form.Group>
-          <Button variant="primary"   className="p-2" onClick={upload}>upload</Button>
+    
+          <button  onClick={upload}>upload</button>
         
-      </Stack>
+      
 
       <label>
         Select Your Field:
@@ -110,7 +123,7 @@ const upload = ()=>{
         }}
       />
       <button onClick={addService}>Add Service</button>
-    </div>
+      </Stack>
   );
 };
 
