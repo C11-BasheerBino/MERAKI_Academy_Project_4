@@ -1,5 +1,5 @@
 <p align="center">
- <img width="400px" height="100px" src="./frontend/src/components/shared components/M_processed.jpg" alt="Project logo">
+ <img width="400px" height="400px" src="./frontend/src/components/shared components/M_processed.jpg" alt="Project logo">
  </a>
 </p>
 

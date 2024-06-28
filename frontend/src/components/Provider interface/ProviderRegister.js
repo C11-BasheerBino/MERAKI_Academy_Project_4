@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, TextField, Container } from "@mui/material/";
+import { Button, TextField, Container, Stack } from "@mui/material/";
 
 const ProviderRegister = () => {
   const [registerMsg, setRegisterMsg] = useState("");
@@ -30,8 +30,13 @@ const ProviderRegister = () => {
       });
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs"  sx={{backgroundColor:"#e0e0e0",marginTop:"50px",  borderRadius: "12px"}}>
+      <Stack direction="row"
+          justifyContent="center"
+          alignItems="center"
+          >
       <TextField
+      sx={{backgroundColor:"white"}}
         margin="normal"
         required
         fullWidth
@@ -44,6 +49,7 @@ const ProviderRegister = () => {
         }}
       />
       <TextField
+      sx={{backgroundColor:"white"}}
         margin="normal"
         required
         fullWidth
@@ -54,8 +60,13 @@ const ProviderRegister = () => {
         onChange={(e) => {
           setProvider({ ...provider, lastName: e.target.value });
         }}
-      />
-      <TextField
+      /></Stack>
+      <Stack direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+          mt={3}><TextField
+          sx={{backgroundColor:"white"}}
         id="outlined-number"
         label="Age"
         type="number"
@@ -64,6 +75,7 @@ const ProviderRegister = () => {
         }}
       />
       <TextField
+      sx={{backgroundColor:"white"}}
         margin="normal"
         required
         id="Country"
@@ -73,8 +85,9 @@ const ProviderRegister = () => {
         onChange={(e) => {
           setProvider({ ...provider, country: e.target.value });
         }}
-      />
+      /></Stack>
       <TextField
+      sx={{backgroundColor:"white"}}
         margin="normal"
         required
         fullWidth
@@ -88,6 +101,7 @@ const ProviderRegister = () => {
         }}
       />
       <TextField
+      sx={{backgroundColor:"white"}}
         margin="normal"
         required
         fullWidth
@@ -100,7 +114,12 @@ const ProviderRegister = () => {
           setProvider({ ...provider, password: e.target.value });
         }}
       />
-      <TextField
+      <Stack direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+          mt={3}><TextField
+          sx={{backgroundColor:"white"}}
         margin="normal"
         required
         id="PhoneNumber"
@@ -112,6 +131,7 @@ const ProviderRegister = () => {
         }}
       />
       <TextField
+      sx={{backgroundColor:"white"}}
         margin="normal"
         required
         id="Location"
@@ -121,8 +141,14 @@ const ProviderRegister = () => {
         onChange={(e) => {
           setProvider({ ...provider, location: e.target.value });
         }}
-      />
+      /></Stack>
+      <Stack direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+          mt={3}>
       <TextField
+      sx={{backgroundColor:"white"}}
         margin="normal"
         required
         id="You work field"
@@ -134,13 +160,14 @@ const ProviderRegister = () => {
         }}
       />
       <TextField
+      sx={{backgroundColor:"white"}}
         id="outlined-number"
         label="experince"
         type="number"
         onChange={(e) => {
           setProvider({ ...provider, experince: e.target.value });
         }}
-      />
+      /></Stack>
       <Button
         type="submit"
         fullWidth
