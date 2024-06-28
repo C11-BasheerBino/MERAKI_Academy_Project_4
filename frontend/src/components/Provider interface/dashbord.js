@@ -2,22 +2,27 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 
+import {Box,Button} from "@mui/material/";
+import { DataGrid } from "@mui/x-data-grid";
+import CancelIcon from '@mui/icons-material/Cancel';
+
 
 const Dashbord = () => {
   const user = useContext(UserContext);
   const [updateStatus, setUpdateStatus] = useState();
   const [penddingData, setPenddingData] = useState();
   const [accpeted, setAccepted] = useState();
-  const [finished,setFinished] =useState()
+  const [finished, setFinished] = useState();
   const [history, setHistory] = useState([]); //build backend get all rqeust then filter it without pendding
   const [startTime, setStartTime] = useState();
   const [finishTime, setFinishTime] = useState();
+  const [reRenderStatus, setReRenderStatus] = useState();
+  const [selectedId, setSelectedId] = useState();
   useEffect(() => {
     axios
       .get(`http://localhost:5000/requests/provider/${user.loggingId}`)
       .then((result) => {
-        console.log(result.data.services);
-      
+
         result.data.services &&
           setPenddingData(
             result.data.services.filter((element) => {
@@ -31,9 +36,11 @@ const Dashbord = () => {
           })
         );
 
-        setFinished(result.data.services.filter((element) => {
-          return element.status === "Finished";
-        }))
+        setFinished(
+          result.data.services.filter((element) => {
+            return element.status === "Finished";
+          })
+        );
 
         result.data.services &&
           setHistory(
@@ -44,7 +51,7 @@ const Dashbord = () => {
             })
           );
       });
-  }, [updateStatus,finishTime]);
+  }, [updateStatus, finishTime]);
   const Accept = (id) => {
     setUpdateStatus("Accepted");
 
@@ -53,7 +60,7 @@ const Dashbord = () => {
         status: "Accepted",
       })
       .then((result) => {
-        console.log(result);
+        setReRenderStatus(reRenderStatus + 1);
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +74,7 @@ const Dashbord = () => {
         status: "Rejected",
       })
       .then((result) => {
-        console.log(result);
+        setReRenderStatus(reRenderStatus + 1);
       })
       .catch((err) => {
         console.log(err);
@@ -75,118 +82,404 @@ const Dashbord = () => {
   };
 
   const getStartTime = (id) => {
+    setSelectedId(id);
     const time = new Date();
 
     const totalHours = time.getHours() + time.getMinutes() / 60;
-    console.log(totalHours);
     setStartTime(totalHours);
 
-    axios.put(`http://localhost:5000/requests/time/${id}`,{startTime:totalHours}).then((result)=>{
-      console.log(result)
-    }).catch((err)=>{
-      console.log(err)
-    })
+    axios
+      .put(`http://localhost:5000/requests/time/${id}`, {
+        startTime: totalHours,
+      })
+      .then((result) => {
+        setReRenderStatus(reRenderStatus + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const getFinishTime = (id) => {
     const time = new Date();
 
     const totalHours = time.getHours() + time.getMinutes() / 60;
-    console.log(totalHours);
     setFinishTime(totalHours);
-    axios.put(`http://localhost:5000/requests/time/${id}`,{finishTime:totalHours}).then((result)=>{
-      console.log(result)
-    }).catch((err)=>{
-      console.log(err)
-    })
-
+    axios
+      .put(`http://localhost:5000/requests/time/${id}`, {
+        finishTime: totalHours,
+      })
+      .then((result) => {
+        setReRenderStatus(reRenderStatus + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     axios
-    .put(`http://localhost:5000/requests/${id}`, {
-      status: "Finished",
-    })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err) => {
-      console.log(err);
+      .put(`http://localhost:5000/requests/${id}`, {
+        status: "Finished",
+      })
+      .then((result) => {
+        setReRenderStatus(reRenderStatus + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  ////////
+  const penddingRows = [];
+  let penddingColumns = [];
+  penddingData &&
+    penddingData.map((element) => {
+      penddingColumns = [
+        { field: "id", headerName: "Request ID", width: 150 },
+        {
+          field: "serviceName",
+          headerName: "Service name",
+          width: 250,
+          editable: false,
+        },
+        {
+          field: "Price",
+          headerName: "Service Price",
+          width: 150,
+          editable: false,
+        },
+
+        {
+          field: "clientName",
+          headerName: "Client Name",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "PhoneNumber",
+          headerName: "PhoneNumber",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "Location",
+          headerName: "Location",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "status",
+          headerName: "Status",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "actions",
+          headerName: "Actions",
+          width: 250,
+          editable: true,
+          renderCell: (cellValues) => (
+            <>
+              <Button sx={{width:"100px"}} variant="contained" 
+                onClick={() => {
+                  Accept(cellValues.id);
+                }}
+                id={element._id}
+              >
+                Accept
+              </Button>{" "}
+              <Button variant="outlined" sx={{width:"100px" , color:"red", border:"red"}}  startIcon={<CancelIcon />} onClick={Reject} id={element._id}>
+                Reject
+              </Button>{" "}
+            </>
+          ),
+        },
+      ];
+      let userName = element.userId.firstName + " " + element.userId.lastName;
+
+      penddingRows.push({
+        id: element._id,
+        serviceName: element.serviceId.serviceName,
+        status: element.status,
+        clientName: userName,
+        PhoneNumber: element.userId.phoneNumber,
+        Location: element.userId.location,
+        Price: element.serviceId.price + "$ per Hour",
+      });
+    });
+  ///////
+  const accpetedRows = [];
+  let accpetedColumns = [];
+  accpeted &&
+    accpeted.map((element) => {
+      accpetedColumns = [
+        { field: "id", headerName: "Request ID", width: 150 },
+        {
+          field: "serviceName",
+          headerName: "Service name",
+          width: 250,
+          editable: false,
+        },
+        {
+          field: "Price",
+          headerName: "Service Price",
+          width: 150,
+          editable: false,
+        },
+
+        {
+          field: "clientName",
+          headerName: "Client Name",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "PhoneNumber",
+          headerName: "PhoneNumber",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "Location",
+          headerName: "Location",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "status",
+          headerName: "Status",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "actions",
+          headerName: "Actions",
+          width: 150,
+          editable: true,
+          renderCell: (cellValues) => (
+            <>
+              {!startTime ? (
+                <Button variant="contained" sx={{background:"#4caf50" }}
+                  onClick={() => {
+                    getStartTime(cellValues.id);
+                  }}
+                >
+                  Start
+                </Button>
+              ) : (
+                selectedId === cellValues.id && (
+                  <Button variant="contained"
+                    onClick={() => {
+                      getFinishTime(cellValues.id);
+                    }}
+                  >
+                    Finish
+                  </Button>
+                )
+              )}
+            </>
+          ),
+        },
+      ];
+      let userName = element.userId.firstName + " " + element.userId.lastName;
+      accpetedRows.push({
+        id: element._id,
+        serviceName: element.serviceId.serviceName,
+        status: element.status,
+        clientName: userName,
+        PhoneNumber: element.userId.phoneNumber,
+        Location: element.userId.location,
+        Price: element.serviceId.price + "$ per Hour",
+      });
     });
 
+  ///////////
+  const finishedRows = [];
+  let finishedColumns = [];
+  finished &&
+    finished.map((element) => {
+      finishedColumns = [
+        { field: "id", headerName: "Request ID", width: 150 },
+        {
+          field: "serviceName",
+          headerName: "Service name",
+          width: 250,
+          editable: false,
+        },
+        {
+          field: "Price",
+          headerName: "Service Price",
+          width: 150,
+          editable: false,
+        },
 
-  };
+        {
+          field: "clientName",
+          headerName: "Client Name",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "PhoneNumber",
+          headerName: "PhoneNumber",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "Location",
+          headerName: "Location",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "status",
+          headerName: "Status",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "Totaltime",
+          headerName: "Total Time",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "Totalprice",
+          headerName: "Total Price",
+          width: 150,
+          editable: false,
+        },
+      ];
 
- 
+      let totalTime = `${Math.trunc(element.finishTime - element.startTime)} hours` + ` ${Math.trunc(
+                    (element.finishTime -
+                      element.startTime -
+                      Math.trunc(element.finishTime - element.startTime)) *
+                      60
+                  )} minutes `;
+     let totalPrice = `${(element.finishTime - element.startTime) *
+                    element.serviceId.price} $`
+      let userName = element.userId.firstName + " " + element.userId.lastName;
+      finishedRows.push({
+        id: element._id,
+        serviceName: element.serviceId.serviceName,
+        status: element.status,
+        clientName: userName,
+        PhoneNumber: element.userId.phoneNumber,
+        Location: element.userId.location,
+        Price: element.serviceId.price + "$ per Hour",
+        Totaltime: totalTime,
+        Totalprice:totalPrice,
+      });
+    });
+///////
+const historyRows = [];
+let historyColumns = [];
+history &&
+  history.map((element) => {
+    historyColumns = [
+      { field: "id", headerName: "Request ID", width: 150 },
+      {
+        field: "serviceName",
+        headerName: "Service name",
+        width: 250,
+        editable: false,
+      },
+      {
+        field: "Price",
+        headerName: "Service Price",
+        width: 150,
+        editable: false,
+      },
+
+      {
+        field: "clientName",
+        headerName: "Client Name",
+        width: 150,
+        editable: false,
+      },
+      {
+        field: "PhoneNumber",
+        headerName: "PhoneNumber",
+        width: 150,
+        editable: false,
+      },
+      {
+        field: "Location",
+        headerName: "Location",
+        width: 150,
+        editable: false,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 150,
+        editable: false,
+      },
+      
+    ];
+    let userName = element.userId.firstName + " " + element.userId.lastName;
+
+    historyRows.push({
+      id: element._id,
+      serviceName: element.serviceId.serviceName,
+      status: element.status,
+      clientName: userName,
+      PhoneNumber: element.userId.phoneNumber,
+      Location: element.userId.location,
+      Price: element.serviceId.price + "$ per Hour",
+    });
+  });
+
   return (
     <div>
       <div className="sales"></div>
-      <div className="pendding">
-        {penddingData &&
-          penddingData.map((element, i) => {
-            return (
-              <div>
-                {i + 1}- service name:- {element.serviceId.serviceName} status
-                :- {element.status}{" "}
-                <button  onClick={()=>{
-                  Accept(element._id)
-                }} id={element._id}>
-                  Accept
-                </button>{" "}
-                <button onClick={Reject} id={element._id}>
-                  X
-                </button>{" "}
-              </div>
-            );
-          })}
-        {accpeted &&
-          accpeted.map((element, i) => {
-            return (
-              <div>
-                {i + 1}- service name:- {element.serviceId.serviceName} status
-                :- {element.status}{" "}
-                {!startTime ? (
-                  <button onClick={()=>{
-                    getStartTime(element._id)
-                  }}>start</button>
-                ) :  (
-                  <button onClick={()=>{
-                    getFinishTime(element._id)
-                  }}>Finish</button>
-                 
-                 
-                )}
-              </div>
-            );
-          })}
- {finished &&
-          finished.map((element, i) => {
-            return (
-              <div>
-                {i + 1}- service name:- {element.serviceId.serviceName} status
-                :- {element.status} 
-                <div >
-                    {" "}
-                    {Math.trunc(element.finishTime - element.startTime)} hours{" "}
-                    {Math.trunc(
-                      (element.finishTime -
-                        element.startTime -
-                        Math.trunc(element.finishTime - element.startTime)) *
-                        60
-                    )}{" "}
-                    minutes{" "}
-                  </div>
-                  <div> price ={(element.finishTime - element.startTime)*element.serviceId.price} $ </div>
-              </div>
-            );
-          })}
-        {history &&
-          history.map((element, i) => {
-            return (
-              <div>
-                {i + 1}- service name:- {element.serviceId.serviceName} status
-                :- {element.status}
-              </div>
-            );
-          })}
-      </div>
+      <Box sx={{ height: 400, width: '100%', backgroundColor:"#e0e0e0"}}>
+      <DataGrid rows={accpetedRows} columns={accpetedColumns} initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+       disableRowSelectionOnClick/>
+      </Box>
+      <Box sx={{ height: 400, width: '100%', backgroundColor:"#e0e0e0"}}>
+
+      <DataGrid rows={penddingRows} columns={penddingColumns} initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+       disableRowSelectionOnClick />      </Box>
+
+      <Box sx={{ height: 400, width: '100%', backgroundColor:"#e0e0e0"}}>
+      
+      <DataGrid rows={finishedRows} columns={finishedColumns} initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+       disableRowSelectionOnClick />      </Box>
+
+
+      <Box sx={{ height: 400, width: '100%' ,backgroundColor:"#e0e0e0"}}>
+
+      <DataGrid rows={historyRows} columns={historyColumns}  initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+       disableRowSelectionOnClick />      </Box>
+
+
     </div>
   );
 };

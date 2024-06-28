@@ -4,12 +4,12 @@
  </a>
 </p>
 
-<h3 align="center">Project Title
+<h3 align="center">MAINTAIN SOLUTIONS
 </h3>
 
 ---
 
-<p align="center"> An awesome Project to describe README 
+<p align="center"> A Maintain solution website makes to connect individuals who need services with providers,making it easier for service providers to find work 
     <br> 
 <a href=''>Demo</a>
     <br> 
@@ -29,7 +29,9 @@
 
 Write about 1-2 paragraphs describing the purpose of your project.
 
-Ex. Are you looking for a quick and easy way to action, action, and action? The **(name of application)** is the greatest and most accurate application to do this for you. It helps you to **(list of activities)**. The **(name of application)** provides a simple design to ensure having the best user experience.
+Ex. Are you looking for a quick and easy way to find any service you need at the best price and fully trusted ? The MAINTAIN SOLUTIONS is the greatest and most accurate application to help you. It helps you to find multi providers of services with different experince.
+ The MAINTAIN SOLUTIONS provides a simple design to ensure having the best user experience.
+What if you are working frequently and there is no solutions to increase your workload ,MAINTAIN SOLUTIONS make to solution for you by registering your work on the site and publishing it to everyone
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -37,10 +39,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Visual Studio Code follow this <a href=''>link</a> to install.
-- Git Bash follow this <a href=''>link</a> to install.
-- MongoDB follow this <a href=''>link</a> to install.
-- Node.js follow this <a href=''>link</a> to install.
+- Visual Studio Code follow this <a href='https://code.visualstudio.com/download'>link</a> to install.
+- Git Bash follow this <a href='https://git-scm.com/downloads'>link</a> to install.
+- MongoDB follow this <a href='https://www.mongodb.com/try/download/community'>link</a> to install.
+- Node.js follow this <a href='https://nodejs.org/en/download/package-manager'>link</a> to install.
 
 ### Installing:
 
@@ -76,9 +78,23 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 Ex.
 
-- You don't have to register to navigate our web app
-- You can click on the **Home** tab provided in the navigation bar to view the home section
-- You can click on the **Add to cart** button to add this product to your cart but you have to be one of our users, so you should create an account
+- You must to register to navigate our web app ,there is two mains register ,first one for user who need to service ,and the provider of the service
+
+- first if you have an account or registered to the website you can logged in 
+![alt text](image.png)
+
+- After that you have a dashbord as a user for you requests of the services 
+
+- You can find your service from fields then select your category after the page will show all services of the field (selected category )
+- you can press to send request to send a request for the provider and wait until take the approve from the provider 
+
+
+- if you are logged in as a provider there is the dashbord for your requests of own services 
+- From myService you will find your service and update or delete it.
+
+- you can make a new service by Create New Service then add your title and descritpion of your service
+
+
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
@@ -86,15 +102,15 @@ Ex.
 - [Express JS](https://expressjs.com/) - Server Framework
 - [React JS](https://https://reactjs.org/) - Web Framework
 - [Node JS](https://nodejs.org/en/) - Server Environment
-
+- [MUI](https://mui.com/) -Design  
 ## User Story <a name = "#user_story"></a>
 
 Your trello board link
-<a href=''>Trello</a>
+<a href='https://trello.com/b/HjcEVLy4/project4'>Trello</a>
 
 ## Data Flow <a name = "#data_flow"></a>
 
-<img width=200px height=200px src="https://cacoo.com/assets/site/img/templates/screenshots/er-database-diagram.png" alt="Diagram"></a>
+<img width=200px height=200px src="./project4_Flow_Chart.png" alt="Diagram"></a>
 
 ## ⚠️ Guided By <a name = "guided_by"></a>
 

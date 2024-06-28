@@ -22,18 +22,27 @@ const LoginAsProvider = () => {
         localStorage.setItem("loggingId", result.data.providerId);
         user.setLoggingId(result.data.providerId);
         console.log("hello from provider login", user.loggingId);
+
+
       
         localStorage.setItem("loggedInRole", 'provider');
         user.setWhoIsLoggedIn("provider");
+
+        localStorage.setItem("name",result.data.name);
+        user.setName(result.data.name);
         navigate("/dashbord");
+
+
       })
       .catch((err) => {});
   };
   return (
     
     
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{backgroundColor:"#e0e0e0",marginTop:"50px",  borderRadius: "12px"}}>
       <TextField
+            sx={{backgroundColor:"white"}}
+
               margin="normal"
               required
               fullWidth
@@ -48,6 +57,8 @@ const LoginAsProvider = () => {
       />
 
 <TextField
+      sx={{backgroundColor:"white"}}
+
               margin="normal"
               required
               fullWidth

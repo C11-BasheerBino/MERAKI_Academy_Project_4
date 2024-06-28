@@ -98,6 +98,7 @@ const loginProvider = (req, res) => {
           message: "Valid login credentials",
           token: token,
           role: result,
+          name:`${result.firstName}`
         };
         return res.json(keys).status(200);
       } catch (error) {

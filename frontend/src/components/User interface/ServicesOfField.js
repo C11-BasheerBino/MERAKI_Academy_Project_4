@@ -9,17 +9,15 @@ import {
   Typography,
   Button,
   Alert,
- 
 } from "@mui/material/";
 
 const ServicesOfField = () => {
   const user = useContext(UserContext);
   const [requestMsg, setRequestMsg] = useState("");
-  const [myServiceId,setMyServiceId]=useState('')
+  const [myServiceId, setMyServiceId] = useState("");
   const selectedFieldServices = user.allFields.filter((Element) => {
     return Element._id === user.cardId;
   });
- 
 
   const sendRequest = (id, providerId) => {
     axios
@@ -30,7 +28,7 @@ const ServicesOfField = () => {
       })
       .then((result) => {
         setRequestMsg(result.data.message);
-        setMyServiceId(id)
+        setMyServiceId(id);
       });
   };
 
@@ -46,7 +44,7 @@ const ServicesOfField = () => {
     >
       {selectedFieldServices[0].services.map((element) => {
         return (
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{minWidth:345, maxWidth: 345, backgroundColor:"#e0e0e0",borderRadius: "12px" }}>
             <CardMedia
               sx={{ height: 140 }}
               image={element.image}
@@ -70,7 +68,7 @@ const ServicesOfField = () => {
               >
                 Send Request
               </Button>
-              {requestMsg && myServiceId ===element._id && (
+              {requestMsg && myServiceId === element._id && (
                 <Alert severity="success">{requestMsg}</Alert>
               )}
             </CardContent>

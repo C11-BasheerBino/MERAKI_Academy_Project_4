@@ -15,7 +15,7 @@ import ProviderRequest from "./components/Admin_dashbbord/ProviderRequests";
 import ServicesOfField from "./components/User interface/ServicesOfField"
 import logo from "./M.png"
 
-
+document.body.style.backgroundColor = "#d0e9f5";
 
 
 export const UserContext = createContext();
@@ -27,9 +27,10 @@ const App = () => {
   const [whoIsLoggedIn, setWhoIsLoggedIn] = useState(localStorage.getItem("loggedInRole") || null);
   const [allFields, setAllFields] = useState();
   const [cardId, setCardId] = useState();
+  const [name,setName]=useState(localStorage.getItem("name") || null)
   return (
     <div className="App">
-      <h1><img src={logo} alt="logo" width="120" height="180"/>  MAIINTAIN SOLUTIONS</h1> 
+      
       <UserContext.Provider
         value={{
           token,
@@ -44,6 +45,7 @@ const App = () => {
           setCardId,
           allFields,
           setAllFields,
+          name,setName,
         }}
       >
         <Navigation />
@@ -58,7 +60,7 @@ const App = () => {
           <Route path="/providers/add_new_service" element={<AddService />} />
           <Route path="/fields/*" element={<Fields />} />
           <Route path="/fields/services" element={<ServicesOfField />} />
-          <Route path="/" element={<Navigation/>} />
+          <Route path="/admin/provider_Update" element={<ProviderRequest/>}/>
           <Route
             path="/admin/provider_requests"
             element={<ProviderRequest />}
