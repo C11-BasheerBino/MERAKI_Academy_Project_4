@@ -10,9 +10,10 @@ import {
   TextField,
   Button,
   Container,
+  Alert,
 } from "@mui/material/";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { MuiFileInput } from "mui-file-input";
+import  CheckIcon  from "@mui/icons-material/Check";
 
 const AddService = () => {
   const [allFields, setAllFields] = useState();
@@ -32,6 +33,7 @@ const AddService = () => {
   const [imgUrl, setImgUrl] = useState();
   const [serviceField, setServiceField] = useState();
   const [price, setPrice] = useState();
+  const [serviceMsg,setServiceMsg]=useState()
   const user = useContext(UserContext);
   const addService = () => {
     axios
@@ -46,6 +48,7 @@ const AddService = () => {
       .then((result) => {
         console.log(result);
         console.log(user.loggingId);
+        setServiceMsg(result.data.message)
       })
       .catch((err) => {
         console.log(err);
@@ -184,6 +187,9 @@ const AddService = () => {
         <Button variant="contained" onClick={addService} mb={3}>
           ADD SERVICE
         </Button>
+        {serviceMsg=== "service added successfully" &&<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+ {serviceMsg}
+</Alert>}
       </Container>
     </Stack>
   );

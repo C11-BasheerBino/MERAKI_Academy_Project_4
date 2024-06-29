@@ -32,8 +32,123 @@ const Navigation = () => {
         }}
       >
         <Toolbar>
+        {userStatus.whoIsLoggedIn !== "user" &&
+            userStatus.whoIsLoggedIn !== "provider" && userStatus.whoIsLoggedIn==="ADMIN" &&(
+              <Box
+                sx={{
+                  backgroundColor: "lightblue",
+                  flexDirection: "row",
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                  alignItems: "center",
+                }}
+              >
+                <Link to="/users/login">
+                  <Box
+                    component="img"
+                    sx={{ height: 100 }}
+                    alt="Logo"
+                    src={logo}
+                  />
+                </Link>
+
+                <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  color: "black", textDecoration: "none", marginBottom:"none"
+                }}
+              >
+                
+                  MAINTAIN SOLUTIONS
+           
+              </Typography>
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                }}
+              >
+                <Link
+                  to="/admin/provider_Update"
+                  style={{ color: "black", textDecoration: "none" }}
+                >
+                  Update Provider 
+                </Link>
+              </Typography>
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                }}
+              >
+                <Link
+                  to="/admin/create_field"
+                  style={{ color: "black", textDecoration: "none" }}
+                >
+                 Create New Field 
+                </Link>
+              </Typography>
+              <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                  }}
+                >
+                  <Link
+                    to="/fields"
+                    style={{ color: "black", textDecoration: "none" }}
+                  >
+                    Fields
+                  </Link>
+                </Typography>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
+                >
+                  <Link
+                    to="/users/login"
+                    onClick={logout}
+                    style={{ color: "black", textDecoration: "none" }}
+                  >
+                    {" "}
+                    Logout
+                  </Link>{" "}
+                </Typography>
+              </Box>
+            )}
+
           {userStatus.whoIsLoggedIn !== "user" &&
-            userStatus.whoIsLoggedIn !== "provider" && userStatus!=="admin" &&(
+            userStatus.whoIsLoggedIn !== "provider" && userStatus.whoIsLoggedIn!=="ADMIN" &&(
               <Box
                 sx={{
                   backgroundColor: "lightblue",

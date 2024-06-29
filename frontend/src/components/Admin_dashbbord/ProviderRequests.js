@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  Stack,
+  Card,
+  CardContent,
+  Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  Button,
+  InputLabel
+  
+} from "@mui/material/";
 
 const ProviderRequest = () => {
   const [showStatus, setShowStatus] = useState('');
@@ -29,40 +41,71 @@ const ProviderRequest = () => {
     });
   }, [renderUpdateStatus]);
   return (
-    <div>
-      <div>
+    <Stack
+      spacing={{ xs: 2, sm: 4 }}
+      direction="row"
+      useFlexGap
+      flexWrap="wrap"
+      justifyContent="flex-start"
+      alignItems="center"
+      mt={4}
+    >
+      
         {penddingProviders &&
           penddingProviders.map((element) => {
             return (
-              <div>
-                <p>{element.firstName}</p>
-                <p>{element.status}</p>
+              <Card sx={{ minWidth: 220, maxWidth: 220, minHeight: 200,backgroundColor:"#e0e0e0" }} >
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                  {element.firstName}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                  {element.status}
+                  </Typography>
+                  <Typography gutterBottom variant="h6" component="div">
+                  {element.workField}
+                  </Typography>
 
-                <p>{element.workField}</p>
-                <button id={element._id} onClick={showSelector}>Update Status</button>
+           
+                  <Button
+            component="label"
+            variant="contained" id={element._id} onClick={showSelector}>Update Status</Button>
 
-                <div>
-                  {showStatus ===element._id && (
-                    <select
+
+ 
+            
+             
+             </CardContent>
+          
+
+                  {showStatus ===element._id && (          <FormControl sx={{ m: 3, minWidth: 180 }}>
+
+                              <InputLabel id="select">Select New Status:</InputLabel>
+
+                    <Select
+                    label="Select new status:"
                       value={selectedStatus}
                       onChange={(e) => setSelectedStatus(e.target.value)}
                     >
-                      <option value="Accepted">Accept</option>
-                      <option value="Rejected">Reject</option>
-                      <option value="Pendding">Hold The Request</option>
-                    </select>
-                  )}
+                      <MenuItem value="Accepted">Accept</MenuItem>
+                      <MenuItem value="Rejected">Reject</MenuItem>
+                      <MenuItem value="Pendding">Hold The Request</MenuItem>
+                    </Select></FormControl>
+                  )}                     
+
                   {showStatus ===element._id && (
-                    <button id={element._id} onClick={updateStatus}>
+                    <Button variant="outlined" id={element._id} onClick={updateStatus}>
                       save
-                    </button>
+                    </Button>
                   )}
-                </div>
-              </div>
+               
+               
+
+              </Card>
             );
           })}
-      </div>
-    </div>
+      
+    </Stack>
   );
 };
 

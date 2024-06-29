@@ -14,6 +14,7 @@ import Navigation from "./components/shared components/Navbar";
 import ProviderRequest from "./components/Admin_dashbbord/ProviderRequests";
 import ServicesOfField from "./components/User interface/ServicesOfField"
 import logo from "./M.png"
+import  CreateField  from "./components/Admin_dashbbord/CreateField";
 
 document.body.style.backgroundColor = "#d0e9f5";
 
@@ -61,10 +62,9 @@ const App = () => {
           <Route path="/fields/*" element={<Fields />} />
           <Route path="/fields/services" element={<ServicesOfField />} />
           <Route path="/admin/provider_Update" element={<ProviderRequest/>}/>
-          <Route
-            path="/admin/provider_requests"
-            element={<ProviderRequest />}
-          />
+          
+          <Route path="/admin/create_field" element={<CreateField/>}/>
+
         </Routes>
       </UserContext.Provider>
     </div>

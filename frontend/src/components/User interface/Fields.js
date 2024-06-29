@@ -51,7 +51,7 @@ const Fields = () => {
           user.allFields &&
           user.allFields.map((elem) => {
             return (
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345, minWidth:345, minHeight:350}}>
                 <CardMedia
                   sx={{ height: 140 }}
                   image={elem.image}

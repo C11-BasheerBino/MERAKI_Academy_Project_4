@@ -10,7 +10,7 @@ const createField=(req,res)=>{
     newField.save().then((result)=>{
         const keys = {
             success:true,
-            message:'new field cardcreated successfully '
+            message:'new field card created successfully'
         }
         res.json(keys).status(200)
     }).catch((err)=>{

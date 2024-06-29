@@ -30,13 +30,13 @@ const Dashbord = () => {
             })
           );
 
-        setAccepted(
+          result.data.services && setAccepted(
           result.data.services.filter((element) => {
             return element.status === "Accepted";
           })
         );
 
-        setFinished(
+        result.data.services && setFinished(
           result.data.services.filter((element) => {
             return element.status === "Finished";
           })

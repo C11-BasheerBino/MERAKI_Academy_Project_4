@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, TextField, Container, Stack } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
 
 const ProviderRegister = () => {
   const [registerMsg, setRegisterMsg] = useState("");
+  const navigate = useNavigate();
+
   const [provider, setProvider] = useState({
     firstName: "",
     lastName: "",
@@ -20,9 +23,8 @@ const ProviderRegister = () => {
     axios
       .post("http://localhost:5000/providers/register", provider)
       .then((result) => {
-        console.log(result.data.message);
         setRegisterMsg(result.data.message);
-        console.log(registerMsg);
+        navigate("/providers/login")
       })
       .catch((err) => {
         setRegisterMsg(err.response.data.message);
